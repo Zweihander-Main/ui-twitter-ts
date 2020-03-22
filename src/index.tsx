@@ -12,7 +12,6 @@ const store: Store<RootState> = createStore(reducer, middleware);
 
 ReactDOM.render(
 	<Provider store={store}>
-		{' '}
 		<App />
 	</Provider>,
 	document.getElementById('root')
