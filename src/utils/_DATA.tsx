@@ -258,22 +258,24 @@ export function _saveLikeToggle({
 	authedUser,
 }: LikeToggleToSave): Promise<void> {
 	return new Promise((res) => {
-		setTimeout(() => {
-			tweets = {
-				...tweets,
-				[id]: {
-					...tweets[id],
-					likes:
-						hasLiked === true
-							? tweets[id].likes.filter(
-									(uid) => uid !== authedUser
-							  )
-							: tweets[id].likes.concat([authedUser]),
-				},
-			};
+		if (authedUser) {
+			setTimeout(() => {
+				tweets = {
+					...tweets,
+					[id]: {
+						...tweets[id],
+						likes:
+							hasLiked === true
+								? tweets[id].likes.filter(
+										(uid) => uid !== authedUser
+								  )
+								: tweets[id].likes.concat([authedUser]),
+					},
+				};
 
-			res();
-		}, 500);
+				res();
+			}, 500);
+		}
 	});
 }
 

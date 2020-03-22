@@ -1,3 +1,6 @@
+import { Action } from 'redux';
+import { loadingBarReducer } from 'react-redux-loading';
+
 export interface User {
 	id: string;
 	name: string;
@@ -40,10 +43,14 @@ export interface UITweet {
 	parent: null | UIParentTweet;
 }
 
+export type UITweets = Array<UITweet>;
+
+export type AuthedUserType = string | null;
+
 export interface LikeToggleToSave {
 	id: string;
 	hasLiked: boolean;
-	authedUser: string;
+	authedUser: AuthedUserType;
 }
 
 export interface TweetToSave {
@@ -51,3 +58,44 @@ export interface TweetToSave {
 	text: string;
 	replyingTo: null | string;
 }
+
+export interface RootState {
+	users: Users;
+	tweets: Tweets;
+	authedUser: AuthedUserType;
+	loadingBar: typeof loadingBarReducer;
+}
+
+export const SET_AUTHED_USER = 'SET_AUTHED_USER';
+export const GET_TWEETS = 'GET_TWEETS';
+export const GET_USERS = 'GET_USERS';
+
+export interface SetAuthedUser extends Action<typeof SET_AUTHED_USER> {
+	type: typeof SET_AUTHED_USER;
+	payload: {
+		authedUser: AuthedUserType;
+	};
+}
+
+export interface GetTweets extends Action<typeof GET_TWEETS> {
+	type: typeof GET_TWEETS;
+	payload: {
+		tweets: Tweets;
+	};
+}
+
+export interface GetUsers extends Action<typeof GET_USERS> {
+	type: typeof GET_USERS;
+	payload: {
+		users: Users;
+	};
+}
+
+export type AuthedUserActionTypes = SetAuthedUser;
+export type TweetActionTypes = GetTweets;
+export type UserActionTypes = GetUsers;
+
+export type RootAction =
+	| AuthedUserActionTypes
+	| TweetActionTypes
+	| UserActionTypes;

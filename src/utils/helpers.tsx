@@ -10,7 +10,7 @@ export function formatTweet(
 	tweet: Tweet,
 	author: User,
 	authedUser: string,
-	parentTweet: Tweet
+	parentTweet?: Tweet
 ): UITweet {
 	const { id, likes, replies, text, timestamp } = tweet;
 	const { name, avatarURL } = author;
