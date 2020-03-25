@@ -1,4 +1,4 @@
-import { Tweet, User, UITweet } from '../types';
+import { Tweet, User, UITweet, AuthedUserType } from '../types';
 
 export function formatDate(timestamp: number): string {
 	const d = new Date(timestamp);
@@ -9,7 +9,7 @@ export function formatDate(timestamp: number): string {
 export function formatTweet(
 	tweet: Tweet,
 	author: User,
-	authedUser: string,
+	authedUser: AuthedUserType,
 	parentTweet?: Tweet
 ): UITweet {
 	const { id, likes, replies, text, timestamp } = tweet;
@@ -23,7 +23,7 @@ export function formatTweet(
 		avatar: avatarURL,
 		likes: likes.length,
 		replies: replies.length,
-		hasLiked: likes.includes(authedUser),
+		hasLiked: authedUser ? likes.includes(authedUser) : false,
 		parent: !parentTweet
 			? null
 			: {

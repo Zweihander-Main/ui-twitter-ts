@@ -68,19 +68,14 @@ export interface RootState {
 
 export const SET_AUTHED_USER = 'SET_AUTHED_USER';
 export const GET_TWEETS = 'GET_TWEETS';
+export const TOGGLE_TWEET = 'TOGGLE_TWEET';
+export const ADD_TWEET = 'ADD_TWEET';
 export const GET_USERS = 'GET_USERS';
 
 export interface SetAuthedUser extends Action<typeof SET_AUTHED_USER> {
 	type: typeof SET_AUTHED_USER;
 	payload: {
 		authedUser: AuthedUserType;
-	};
-}
-
-export interface GetTweets extends Action<typeof GET_TWEETS> {
-	type: typeof GET_TWEETS;
-	payload: {
-		tweets: Tweets;
 	};
 }
 
@@ -91,11 +86,48 @@ export interface GetUsers extends Action<typeof GET_USERS> {
 	};
 }
 
+export interface GetTweets extends Action<typeof GET_TWEETS> {
+	type: typeof GET_TWEETS;
+	payload: {
+		tweets: Tweets;
+	};
+}
+
+export interface ToggleTweet extends Action<typeof TOGGLE_TWEET> {
+	type: typeof TOGGLE_TWEET;
+	payload: LikeToggleToSave;
+}
+
+export interface AddTweet extends Action<typeof ADD_TWEET> {
+	type: typeof ADD_TWEET;
+	payload: Tweet;
+}
+
+// Add Action types from react-redux-loading
+const SHOW = 'loading-bar/SHOW';
+const HIDE = 'loading-bar/HIDE';
+
+export interface ShowLoadingAction extends Action<typeof SHOW> {
+	type: typeof SHOW;
+	payload: {
+		scope: string;
+	};
+}
+
+export interface HideLoadingAction extends Action<typeof HIDE> {
+	type: typeof HIDE;
+	payload: {
+		scope: string;
+	};
+}
+
 export type AuthedUserActionTypes = SetAuthedUser;
-export type TweetActionTypes = GetTweets;
+export type TweetActionTypes = GetTweets | ToggleTweet | AddTweet;
 export type UserActionTypes = GetUsers;
+export type ExternalActionTypes = ShowLoadingAction | HideLoadingAction;
 
 export type RootAction =
 	| AuthedUserActionTypes
 	| TweetActionTypes
-	| UserActionTypes;
+	| UserActionTypes
+	| ExternalActionTypes;
