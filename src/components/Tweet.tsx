@@ -33,6 +33,7 @@ class Tweet extends Component<
 	};
 
 	render(): JSX.Element {
+		const { authedUser, tweet } = this.props;
 		const {
 			id,
 			name,
@@ -43,7 +44,7 @@ class Tweet extends Component<
 			replies,
 			hasLiked,
 			parent,
-		} = this.props.tweet;
+		} = tweet;
 		return (
 			<Link to={`/tweet/${id}`} className="tweet">
 				<img
@@ -73,6 +74,7 @@ class Tweet extends Component<
 						<button
 							className="heart-button"
 							onClick={this.handleLike}
+							disabled={authedUser ? false : true}
 						>
 							{hasLiked === true ? (
 								<TiHeartFullOutline

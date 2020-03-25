@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '../types';
 import Tweet from './Tweet';
-// TODO determine SFC
 
 class Timeline extends Component<PropsFromRedux> {
 	render(): JSX.Element {

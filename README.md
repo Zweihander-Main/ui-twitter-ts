@@ -33,8 +33,6 @@
 ### Current TODOs:
 
 -   FaunaDB?
--   TODOS
--   Adding tweet doesn't update users on the client side, doesn't update replies on the server side
 -   What to do with fake id
 -   At the end:
     -   Class to SFC

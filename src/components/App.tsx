@@ -44,8 +44,8 @@ interface AppMappedState {
 	loading: boolean;
 }
 
-const mapState = ({ authedUser }: RootState): AppMappedState => ({
-	loading: authedUser === null,
+const mapState = ({ tweets, users }: RootState): AppMappedState => ({
+	loading: tweets && users ? false : true,
 });
 
 const mapDispatchToProps = (

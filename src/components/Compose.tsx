@@ -1,4 +1,4 @@
-import { RootState, RootAction } from '../types';
+import { RootState, RootAction, AuthedUserType } from '../types';
 import React, { Component } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
@@ -36,11 +36,16 @@ class Compose extends Component<PropsFromRedux & ComposeProps, ComposeState> {
 		}));
 	};
 
-	render(): JSX.Element {
+	render(): JSX.Element | null {
 		const { text, toHome } = this.state;
+		const { authedUser } = this.props;
 
 		if (toHome === true) {
 			return <Redirect to="" />;
+		}
+
+		if (!authedUser) {
+			return null;
 		}
 
 		const tweetLeft = 280 - text.length;
@@ -72,10 +77,13 @@ class Compose extends Component<PropsFromRedux & ComposeProps, ComposeState> {
 	}
 }
 
-// const mapState = (state: RootState, props: ComposeProps) => ({
-// 	...state,
-// 	...props,
-// });
+interface ComposeMappedProps {
+	authedUser: AuthedUserType;
+}
+
+const mapState = ({ authedUser }: RootState): ComposeMappedProps => ({
+	authedUser,
+});
 
 const mapDispatchToProps = (
 	dispatch: ThunkDispatch<RootState, null, RootAction>
@@ -94,7 +102,7 @@ const mapDispatchToProps = (
 	};
 };
 
-const connector = connect(null, mapDispatchToProps);
+const connector = connect(mapState, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 

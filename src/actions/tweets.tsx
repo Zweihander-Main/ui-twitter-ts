@@ -68,6 +68,5 @@ export const handleAddTweet: ActionCreator<ThunkAction<
 				})
 				.then(() => dispatch(hideLoading() as RootAction));
 		}
-		// TODO other case
 	};
 };
