@@ -40,11 +40,11 @@ class App extends Component<PropsFromRedux> {
 	}
 }
 
-interface AppMappedState {
+interface AppMappedProps {
 	loading: boolean;
 }
 
-const mapState = ({ tweets, users }: RootState): AppMappedState => ({
+const mapState = ({ tweets, users }: RootState): AppMappedProps => ({
 	loading: tweets && users ? false : true,
 });
 

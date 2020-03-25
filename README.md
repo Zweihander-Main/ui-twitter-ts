@@ -33,7 +33,6 @@
 ### Current TODOs:
 
 -   FaunaDB?
--   What to do with fake id
 -   At the end:
     -   Class to SFC
 

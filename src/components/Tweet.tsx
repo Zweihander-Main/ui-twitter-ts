@@ -23,8 +23,10 @@ class Tweet extends Component<
 	handleLike = (e: React.MouseEvent<HTMLButtonElement>): void => {
 		e.preventDefault();
 		const { tweet, authedUser, handleToggleTweetDispatch } = this.props;
-		const { id, hasLiked } = tweet;
-		handleToggleTweetDispatch({ id, hasLiked, authedUser });
+		if (tweet) {
+			const { id, hasLiked } = tweet;
+			handleToggleTweetDispatch({ id, hasLiked, authedUser });
+		}
 	};
 
 	toParent = (e: React.MouseEvent<HTMLButtonElement>, id: string): void => {
@@ -34,6 +36,9 @@ class Tweet extends Component<
 
 	render(): JSX.Element {
 		const { authedUser, tweet } = this.props;
+		if (!tweet) {
+			return <h2>Tweet not found!</h2>;
+		}
 		const {
 			id,
 			name,
@@ -97,21 +102,32 @@ interface TweetProps {
 	tweetID: string;
 }
 
-interface TweetMappedState {
-	tweet: UITweet;
+interface TweetMappedProps {
+	tweet: UITweet | null;
 	authedUser: AuthedUserType;
 }
 
 const mapState = (
 	{ tweets, users, authedUser }: RootState,
 	{ tweetID }: TweetProps
-): TweetMappedState => {
+): TweetMappedProps => {
 	const tweet = tweets[tweetID];
-	const { author, replyingTo } = tweet;
-	const parentTweet = replyingTo ? tweets[replyingTo] : undefined;
-	const tweetAuthorObject = users[author];
+	if (tweet) {
+		const { author, replyingTo } = tweet;
+		const parentTweet = replyingTo ? tweets[replyingTo] : undefined;
+		const tweetAuthorObject = users[author];
+		return {
+			tweet: formatTweet(
+				tweet,
+				tweetAuthorObject,
+				authedUser,
+				parentTweet
+			),
+			authedUser,
+		};
+	}
 	return {
-		tweet: formatTweet(tweet, tweetAuthorObject, authedUser, parentTweet),
+		tweet: null,
 		authedUser,
 	};
 };
