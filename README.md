@@ -33,8 +33,8 @@
 ### Current TODOs:
 
 -   FaunaDB?
--   At the end:
-    -   Class to SFC
+    -   Timestamp?
+    -   Fix index -- use actual index and replace id generation system when applicable
 
 ## Available for Hire
 
