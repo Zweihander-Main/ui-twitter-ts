@@ -112,6 +112,7 @@ CURRENT.md
 
 # production
 /build
+/build-*
 
 # misc
 .DS_Store
