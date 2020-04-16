@@ -3,14 +3,14 @@ type Tweet {
 	timestamp: Time!
 	text: String!
 	likes: [String!]
-	id: ID! @unique(index: "tweet_id")
+	id: ID!
 	replyingTo: String
 	replies: [String!]
 }
 
 type User {
 	name: String!
-	id: ID! @unique(index: "user_id")
+	id: ID!
 	avatarURL: String!
 	tweets: [String!]
 }
