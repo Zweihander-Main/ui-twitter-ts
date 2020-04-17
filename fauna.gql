@@ -3,96 +3,21 @@ type Tweet {
 	timestamp: Time!
 	text: String!
 	likes: [String!]
-	id: ID!
 	replyingTo: String
 	replies: [String!]
 }
 
 type User {
 	name: String!
-	id: ID!
 	avatarURL: String!
 	tweets: [String!]
 }
 
 type Mutation {
-	saveTweet(text: String!, author: String!, replyingTo: String): Tweet!
-		@resolver(name: "saveTweet")
 	saveLikeToggle(id: ID!, hasLiked: Boolean!, authedUser: ID!): Tweet!
-		@resolver(name: "saveLikeToggle")
 }
 
 type Query {
 	allTweets: [Tweet!]
 	allUsers: [User!]
 }
-
-# export function _saveLikeToggle({
-#   id,
-#   hasLiked,
-#   authedUser,
-# }: LikeToggleToSave): Promise<void> {
-#   return new Promise((res) => {
-#     if (authedUser) {
-#       setTimeout(() => {
-#         tweets = {
-#           ...tweets,
-#           [id]: {
-#             ...tweets[id],
-#             likes:
-#               hasLiked === true
-#                 ? tweets[id].likes.filter(
-#                     (uid) => uid !== authedUser
-#                   )
-#                 : tweets[id].likes.concat([authedUser]),
-#           },
-#         };
-
-#         res();
-#       }, 500);
-#     }
-#   });
-# }
-
-# function formatTweet({ author, text, replyingTo = null }: TweetToSave): Tweet {
-#   return {
-#     author,
-#     id: generateUID(),
-#     likes: [],
-#     replies: [],
-#     text,
-#     timestamp: Date.now(),
-#     replyingTo,
-#   };
-# }
-
-# export function _saveTweet({
-#   text,
-#   author,
-#   replyingTo,
-# }: TweetToSave): Promise<Tweet> {
-#   return new Promise((res) => {
-#     const formattedTweet = formatTweet({
-#       text,
-#       author,
-#       replyingTo,
-#     });
-
-#     setTimeout(() => {
-#       tweets = {
-#         ...tweets,
-#         [formattedTweet.id]: formattedTweet,
-#       };
-
-#       users = {
-#         ...users,
-#         [author]: {
-#           ...users[author],
-#           tweets: users[author].tweets.concat([formattedTweet.id]),
-#         },
-#       };
-
-#       res(formattedTweet);
-#     }, 1000);
-#   });
-# }

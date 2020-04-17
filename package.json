@@ -6,7 +6,12 @@
 	"license": "MIT",
 	"description": "TypeScript implementation of Twitter clone originally by Tyler McGinnis with some useful additions.",
 	"dependencies": {
+		"apollo-boost": "^0.4.7",
+		"cross-fetch": "^3.0.4",
 		"faunadb": "^2.13.1",
+		"graphql": "^15.0.0",
+		"graphql-tag": "^2.10.3",
+		"netlify-lambda": "^1.6.3",
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1",
 		"react-icons": "^3.9.0",
@@ -16,8 +21,7 @@
 		"react-scripts": "3.4.1",
 		"redux": "^4.0.5",
 		"redux-devtools-extension": "^2.13.8",
-		"redux-thunk": "^2.3.0",
-		"netlify-lambda": "^1.6.3"
+		"redux-thunk": "^2.3.0"
 	},
 	"devDependencies": {
 		"@babel/preset-typescript": "^7.9.0",
@@ -25,6 +29,7 @@
 		"@testing-library/react": "^10.0.2",
 		"@testing-library/user-event": "^10.0.1",
 		"@types/aws-lambda": "^8.10.50",
+		"@types/node-fetch": "^2.5.6",
 		"@types/react": "^16.9.34",
 		"@types/react-dom": "^16.9.6",
 		"@types/react-redux": "^7.1.7",
@@ -52,6 +57,17 @@
 	},
 	"engines": {
 		"node": "12.x"
+	},
+	"babel": {
+		"presets": [
+			"@babel/preset-typescript",
+			"@babel/preset-env"
+		],
+		"plugins": [
+			"@babel/plugin-proposal-class-properties",
+			"@babel/plugin-transform-object-assign",
+			"@babel/plugin-proposal-object-rest-spread"
+		]
 	},
 	"eslintConfig": {
 		"env": {
