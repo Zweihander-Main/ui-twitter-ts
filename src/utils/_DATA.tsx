@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase, quotes */
 import { Tweets, Tweet, Users, TweetToSave, LikeToggleToSave } from '../types';
+import ApolloClient from 'apollo-boost';
+import gql from 'graphql-tag';
 
 let users: Users = {
 	sarah_edo: {
@@ -240,16 +242,48 @@ let tweets: Tweets = {
 	},
 };
 
+const URL = '/.netlify/functions/callAPI';
+
+const client = new ApolloClient({
+	uri: URL,
+});
+
+const query1 = gql`
+	query {
+		allUsers {
+			data {
+				name
+			}
+		}
+	}
+`;
+
+const query2 = gql`
+	query {
+		allTweets {
+			data {
+				author
+			}
+		}
+	}
+`;
+
 export function _getUsers(): Promise<Users> {
-	return new Promise((res) => {
-		setTimeout(() => res({ ...users }), 1000);
-	});
+	// return new Promise((res) => {
+	// 	setTimeout(() => res({ ...users }), 1000);
+	// });
+	return client
+		.query({ query: query1 })
+		.then((result: any) => result.data.allUsers.data);
 }
 
 export function _getTweets(): Promise<Tweets> {
-	return new Promise((res) => {
-		setTimeout(() => res({ ...tweets }), 1000);
-	});
+	// return new Promise((res) => {
+	// 	setTimeout(() => res({ ...tweets }), 1000);
+	// });
+	return client
+		.query({ query: query2 })
+		.then((result: any) => result.data.allTweets.data);
 }
 
 export function _saveLikeToggle({

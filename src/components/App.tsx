@@ -9,7 +9,6 @@ import Timeline from './Timeline';
 import Compose from './Compose';
 import TweetPage from './TweetPage';
 import Nav from './Nav';
-import '../utils/api2';
 
 class App extends Component<PropsFromRedux> {
 	componentDidMount(): void {
