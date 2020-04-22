@@ -25,9 +25,9 @@
 		"typeRoots": ["./typings", "./node_modules/@types"],
 		"skipLibCheck": true,
 		"resolveJsonModule": true,
-		"isolatedModules": true,
-		"noEmit": true
+		"noEmit": true,
+		"isolatedModules": true
 	},
-	"include": ["src/**/*", "functions/**/*", "scripts/faunadb-loader.js"],
+	"include": ["src/**/*", "functions/**/*", "scripts/*.js", "scripts/*.ts"],
 	"exclude": ["src/**/*.html"]
 }

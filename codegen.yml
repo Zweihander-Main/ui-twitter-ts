@@ -3,13 +3,11 @@ schema:
     - https://graphql.fauna.com/graphql:
         loader: ./scripts/faunadb-loader.js
 
-# documents: 'src/queries/*.graphql'
 generates:
     src/queries/graphql.tsx:
         plugins:
             - 'typescript'
             - 'typescript-operations'
-            - 'typescript-react-apollo'
-    ./graphql.schema.json:
-        plugins:
-            - 'introspection'
+        hooks:
+              afterOneFileWrite:
+                - prettier --write

@@ -1,0 +1,18 @@
+type Tweet {
+	author: User! @relation(name: "tweet_author")
+	timestamp: Time!
+	text: String!
+	likes: [User!]
+	replies: [Tweet!]
+}
+
+type User {
+	name: String!
+	avatarURL: String!
+	tweets: [Tweet!] @relation(name: "tweet_author")
+}
+
+type Query {
+	allTweets: [Tweet!]
+	allUsers: [User!]
+}

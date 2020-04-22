@@ -18,5 +18,8 @@ module.exports = (url) => {
 		body: JSON.stringify({ query: getIntrospectionQuery() }),
 	})
 		.then((res) => res.json())
-		.then((schemaJSON) => buildClientSchema(schemaJSON.data));
+		.then((schemaJSON) => buildClientSchema(schemaJSON.data))
+		.catch((err) => {
+			console.error(err);
+		});
 };
