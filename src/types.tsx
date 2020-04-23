@@ -1,12 +1,30 @@
 import { Action } from 'redux';
 import { loadingBarReducer } from 'react-redux-loading';
-import { GetAllUsersQuery, GetAllTweetsQuery } from './queries/graphql';
 
-export type Users = GetAllUsersQuery['allUsers']['data'];
-export type User = NonNullable<Users[0]>;
+export interface User {
+	id: string;
+	name: string;
+	avatarURL: string;
+	tweets: Array<string>;
+}
 
-export type Tweets = GetAllTweetsQuery['allTweets']['data'];
-export type Tweet = NonNullable<Tweets[0]>;
+export interface Users {
+	[key: string]: User;
+}
+
+export interface Tweet {
+	id: string;
+	text: string;
+	author: string;
+	timestamp: number;
+	likes: Array<string>;
+	replies: Array<string>;
+	replyingTo: string | null;
+}
+
+export interface Tweets {
+	[key: string]: Tweet;
+}
 
 export interface UIParentTweet {
 	author: string;

@@ -7,7 +7,7 @@ import { Dispatch, ActionCreator } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { showLoading, hideLoading } from 'react-redux-loading';
 
-const AUTHED_ID = null;
+const AUTHED_ID = 'tylermcginnis'; //TODO
 
 export const handleInitialData: ActionCreator<ThunkAction<
 	Promise<void>,

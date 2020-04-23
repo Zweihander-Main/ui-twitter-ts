@@ -8,7 +8,7 @@ import {
 } from '../types';
 
 const tweets: Reducer<Tweets, TweetActionTypes> = (
-	state: Tweets = [],
+	state: Tweets = {},
 	action: TweetActionTypes
 ) => {
 	switch (action.type) {
@@ -17,36 +17,36 @@ const tweets: Reducer<Tweets, TweetActionTypes> = (
 		case TOGGLE_TWEET:
 			return {
 				...state,
-				// [action.payload.id]: {
-				// 	...state[action.payload.id],
-				// 	likes: action.payload.authedUser
-				// 		? action.payload.hasLiked === true
-				// 			? state[action.payload.id].likes.filter(
-				// 					(userId) =>
-				// 						userId !== action.payload.authedUser
-				// 			  )
-				// 			: state[action.payload.id].likes.concat([
-				// 					action.payload.authedUser,
-				// 			  ])
-				// 		: state[action.payload.id].likes,
-				// },
+				[action.payload.id]: {
+					...state[action.payload.id],
+					likes: action.payload.authedUser
+						? action.payload.hasLiked === true
+							? state[action.payload.id].likes.filter(
+									(userId) =>
+										userId !== action.payload.authedUser
+							  )
+							: state[action.payload.id].likes.concat([
+									action.payload.authedUser,
+							  ])
+						: state[action.payload.id].likes,
+				},
 			};
 		case ADD_TWEET: {
-			// let replyingTo = {};
-			// if (action.payload.replyingTo !== null) {
-			// 	replyingTo = {
-			// 		[action.payload.replyingTo]: {
-			// 			...state[action.payload.replyingTo],
-			// 			replies: state[
-			// 				action.payload.replyingTo
-			// 			].replies.concat([action.payload.id]),
-			// 		},
-			// 	};
-			// }
+			let replyingTo = {};
+			if (action.payload.replyingTo !== null) {
+				replyingTo = {
+					[action.payload.replyingTo]: {
+						...state[action.payload.replyingTo],
+						replies: state[
+							action.payload.replyingTo
+						].replies.concat([action.payload.id]),
+					},
+				};
+			}
 			return {
 				...state,
-				// [action.payload.id]: action.payload,
-				// ...replyingTo,
+				[action.payload.id]: action.payload,
+				...replyingTo,
 			};
 		}
 		default:

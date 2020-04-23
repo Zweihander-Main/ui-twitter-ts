@@ -168,7 +168,7 @@ export type GetAllTweetsQuery = {
 		data: Array<
 			Maybe<
 				Pick<Tweet, 'timestamp' | 'text'> & { id: Tweet['_id'] } & {
-					author: { id: User['_id'] };
+					author: Pick<User, 'name'> & { id: User['_id'] };
 					likes?: Maybe<Array<{ id: User['_id'] }>>;
 					replies?: Maybe<Array<{ id: Tweet['_id'] }>>;
 				}

@@ -3,6 +3,7 @@ query getAllTweets {
 		data {
 			author {
 				id: _id
+				name
 			}
 			timestamp
 			id: _id

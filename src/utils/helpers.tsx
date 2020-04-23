@@ -12,17 +12,8 @@ export function formatTweet(
 	authedUser: AuthedUserType,
 	parentTweet?: Tweet
 ): UITweet {
-	const { id, text, timestamp } = tweet;
-	let { likes, replies } = tweet;
+	const { id, likes, replies, text, timestamp } = tweet;
 	const { name, avatarURL } = author;
-
-	if (!likes) {
-		likes = [];
-	}
-
-	if (!replies) {
-		replies = [];
-	}
 
 	return {
 		name,
@@ -32,13 +23,11 @@ export function formatTweet(
 		avatar: avatarURL,
 		likes: likes.length,
 		replies: replies.length,
-		hasLiked: authedUser
-			? likes.map((like) => like.id).includes(authedUser)
-			: false,
+		hasLiked: authedUser ? likes.includes(authedUser) : false,
 		parent: !parentTweet
 			? null
 			: {
-					author: parentTweet.author.id,
+					author: parentTweet.author,
 					id: parentTweet.id,
 			  },
 	};
