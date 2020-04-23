@@ -11,6 +11,7 @@
 		"faunadb": "^2.13.1",
 		"graphql": "^15.0.0",
 		"graphql-tag": "^2.10.3",
+		"graphql.macro": "^1.4.2",
 		"netlify-lambda": "^1.6.3",
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1",
@@ -128,7 +129,18 @@
 				"error",
 				"smart-tabs"
 			]
-		}
+		},
+		"overrides": [
+			{
+				"files": [
+					"./src/queries/graphql.tsx"
+				],
+				"rules": {
+					"@typescript-eslint/camelcase": "off",
+					"@typescript-eslint/no-explicit-any": "off"
+				}
+			}
+		]
 	},
 	"prettier": {
 		"singleQuote": true,

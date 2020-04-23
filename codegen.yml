@@ -2,12 +2,14 @@ overwrite: true
 schema:
     - https://graphql.fauna.com/graphql:
         loader: ./scripts/faunadb-loader.js
-
+documents: ./src/queries/*.graphql
 generates:
-    src/queries/graphql.tsx:
+    ./src/queries/graphql.tsx:
         plugins:
             - 'typescript'
             - 'typescript-operations'
         hooks:
-              afterOneFileWrite:
+            afterOneFileWrite:
                 - prettier --write
+        config:
+            skipTypename: true

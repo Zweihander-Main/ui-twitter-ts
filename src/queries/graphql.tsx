@@ -13,7 +13,6 @@ export type Scalars = {
 };
 
 export type Mutation = {
-	__typename?: 'Mutation';
 	/** Update an existing document in the collection of 'User' */
 	updateUser?: Maybe<User>;
 	/** Create a new document in the collection of 'User' */
@@ -54,25 +53,41 @@ export type MutationUpdateTweetArgs = {
 	data: TweetInput;
 };
 
+/** Allow manipulating the relationship between the types 'Tweet' and 'User' using the field 'Tweet.author'. */
+export type TweetAuthorRelation = {
+	/** Create a document of type 'User' and associate it with the current document. */
+	create?: Maybe<UserInput>;
+	/** Connect a document of type 'User' with the current document using its ID. */
+	connect?: Maybe<Scalars['ID']>;
+};
+
 /** 'Tweet' input values */
 export type TweetInput = {
-	author: Scalars['String'];
+	author?: Maybe<TweetAuthorRelation>;
 	timestamp: Scalars['Time'];
 	text: Scalars['String'];
-	likes?: Maybe<Array<Scalars['String']>>;
-	replyingTo?: Maybe<Scalars['String']>;
-	replies?: Maybe<Array<Scalars['String']>>;
+	likes?: Maybe<Array<Scalars['ID']>>;
+	replies?: Maybe<Array<Scalars['ID']>>;
 };
 
 /** 'User' input values */
 export type UserInput = {
 	name: Scalars['String'];
 	avatarURL: Scalars['String'];
-	tweets?: Maybe<Array<Scalars['String']>>;
+	tweets?: Maybe<UserTweetsRelation>;
+};
+
+/** Allow manipulating the relationship between the types 'User' and 'Tweet'. */
+export type UserTweetsRelation = {
+	/** Create one or more documents of type 'Tweet' and associate them with the current document. */
+	create?: Maybe<Array<Maybe<TweetInput>>>;
+	/** Connect one or more documents of type 'Tweet' with the current document using their IDs. */
+	connect?: Maybe<Array<Maybe<Scalars['ID']>>>;
+	/** Disconnect the given documents of type 'Tweet' from the current document using their IDs. */
+	disconnect?: Maybe<Array<Maybe<Scalars['ID']>>>;
 };
 
 export type Query = {
-	__typename?: 'Query';
 	/** Find a document from the collection of 'User' by its id. */
 	findUserByID?: Maybe<User>;
 	/** Find a document from the collection of 'Tweet' by its id. */
@@ -100,22 +115,19 @@ export type QueryAllTweetsArgs = {
 };
 
 export type Tweet = {
-	__typename?: 'Tweet';
-	author: Scalars['String'];
+	author: User;
 	timestamp: Scalars['Time'];
 	/** The document's ID. */
 	_id: Scalars['ID'];
 	text: Scalars['String'];
-	likes?: Maybe<Array<Scalars['String']>>;
-	replyingTo?: Maybe<Scalars['String']>;
-	replies?: Maybe<Array<Scalars['String']>>;
+	likes?: Maybe<Array<User>>;
+	replies?: Maybe<Array<Tweet>>;
 	/** The document's timestamp. */
 	_ts: Scalars['Long'];
 };
 
 /** The pagination object for elements of type 'Tweet'. */
 export type TweetPage = {
-	__typename?: 'TweetPage';
 	/** The elements of type 'Tweet' in this page. */
 	data: Array<Maybe<Tweet>>;
 	/** A cursor for elements coming after the current page. */
@@ -125,23 +137,56 @@ export type TweetPage = {
 };
 
 export type User = {
-	__typename?: 'User';
 	name: Scalars['String'];
 	/** The document's ID. */
 	_id: Scalars['ID'];
 	avatarURL: Scalars['String'];
-	tweets?: Maybe<Array<Scalars['String']>>;
+	tweets: TweetPage;
 	/** The document's timestamp. */
 	_ts: Scalars['Long'];
 };
 
+export type UserTweetsArgs = {
+	_size?: Maybe<Scalars['Int']>;
+	_cursor?: Maybe<Scalars['String']>;
+};
+
 /** The pagination object for elements of type 'User'. */
 export type UserPage = {
-	__typename?: 'UserPage';
 	/** The elements of type 'User' in this page. */
 	data: Array<Maybe<User>>;
 	/** A cursor for elements coming after the current page. */
 	after?: Maybe<Scalars['String']>;
 	/** A cursor for elements coming before the current page. */
 	before?: Maybe<Scalars['String']>;
+};
+
+export type GetAllTweetsQueryVariables = {};
+
+export type GetAllTweetsQuery = {
+	allTweets: {
+		data: Array<
+			Maybe<
+				Pick<Tweet, 'timestamp' | 'text'> & { id: Tweet['_id'] } & {
+					author: { id: User['_id'] };
+					likes?: Maybe<Array<{ id: User['_id'] }>>;
+					replies?: Maybe<Array<{ id: Tweet['_id'] }>>;
+				}
+			>
+		>;
+	};
+};
+
+export type GetAllUsersQueryVariables = {};
+
+export type GetAllUsersQuery = {
+	allUsers: {
+		data: Array<
+			Maybe<
+				Pick<User, 'name' | 'avatarURL'> & { id: User['_id'] } & {
+					tweets: { data: Array<Maybe<{ id: Tweet['_id'] }>> };
+				}
+			>
+		>;
+	};
 };

@@ -1,0 +1,14 @@
+query getAllUsers {
+	allUsers {
+		data {
+			name
+			avatarURL
+			id: _id
+			tweets {
+				data {
+					id: _id
+				}
+			}
+		}
+	}
+}
