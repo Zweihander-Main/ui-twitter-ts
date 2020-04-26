@@ -29,9 +29,14 @@ interface TimelineMappedState {
 	tweets: Array<string>;
 }
 
-const mapState = ({ tweets }: RootState): TimelineMappedState => ({
-	tweets: Object.keys(tweets),
-});
+const mapState = ({ tweets }: RootState): TimelineMappedState => {
+	const tweetsEntries = Object.entries(tweets).sort((a, b) => {
+		return b[1].timestamp - a[1].timestamp;
+	});
+	return {
+		tweets: tweetsEntries.map((entry) => entry[0]),
+	};
+};
 
 const connector = connect(mapState);
 

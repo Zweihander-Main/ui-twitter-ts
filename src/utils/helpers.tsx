@@ -27,7 +27,7 @@ export function formatTweet(
 		parent: !parentTweet
 			? null
 			: {
-					author: parentTweet.author,
+					authorName: parentTweet.authorName,
 					id: parentTweet.id,
 			  },
 	};

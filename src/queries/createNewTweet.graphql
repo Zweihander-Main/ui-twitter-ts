@@ -1,0 +1,25 @@
+mutation createNewTweet($author: ID!, $timestamp: Time!, $text: String!) {
+	createTweet(
+		data: {
+			author: { connect: $author }
+			timestamp: $timestamp
+			text: $text
+			likes: []
+			replies: []
+		}
+	) {
+		author {
+			id: _id
+			name
+		}
+		timestamp
+		id: _id
+		text
+		likes {
+			id: _id
+		}
+		replies {
+			id: _id
+		}
+	}
+}

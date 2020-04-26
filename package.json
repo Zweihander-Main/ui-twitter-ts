@@ -7,6 +7,7 @@
 	"description": "TypeScript implementation of Twitter clone originally by Tyler McGinnis with some useful additions.",
 	"dependencies": {
 		"apollo-boost": "^0.4.7",
+		"concurrently": "^5.1.0",
 		"cross-fetch": "^3.0.4",
 		"faunadb": "^2.13.1",
 		"graphql": "^15.0.0",
@@ -29,6 +30,7 @@
 		"@graphql-codegen/cli": "^1.13.2",
 		"@graphql-codegen/introspection": "1.13.2",
 		"@graphql-codegen/typescript": "1.13.2",
+		"@graphql-codegen/typescript-graphql-files-modules": "^1.13.3",
 		"@graphql-codegen/typescript-operations": "1.13.2",
 		"@testing-library/jest-dom": "^5.5.0",
 		"@testing-library/react": "^10.0.2",
@@ -54,13 +56,15 @@
 		"typescript": "^3.8.3"
 	},
 	"scripts": {
+		"dev": "netlify dev",
 		"start": "npm run mergeSchema && npm run startWithoutMerge",
-		"startWithoutMerge": "react-scripts start & npm run codegen --watch",
+		"startWithoutMerge": "concurrently \"npm:codegenWatch\" \"react-scripts start\"",
 		"build": "npm run mergeSchema && npm run codegen && react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject",
 		"functionsBuild": "netlify-lambda build functions",
 		"codegen": "netlify dev:exec graphql-codegen --config codegen.yml",
+		"codegenWatch": "netlify dev:exec graphql-codegen --watch \"./src/queries/*.graphql\" --config codegen.yml",
 		"mergeSchema": "netlify dev:exec node ./scripts/faunadb-import.js",
 		"bootstrap": "npm run mergeSchema && netlify dev:exec node ./scripts/faunadb-bootstrapData.js"
 	},

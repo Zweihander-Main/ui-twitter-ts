@@ -16,6 +16,7 @@ export interface Tweet {
 	id: string;
 	text: string;
 	author: string;
+	authorName: string;
 	timestamp: number;
 	likes: Array<string>;
 	replies: Array<string>;
@@ -27,7 +28,7 @@ export interface Tweets {
 }
 
 export interface UIParentTweet {
-	author: string;
+	authorName: string;
 	id: string;
 }
 

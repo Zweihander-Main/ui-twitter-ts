@@ -68,7 +68,7 @@ class Tweet extends Component<
 									e: React.MouseEvent<HTMLButtonElement>
 								): void => this.toParent(e, parent.id)}
 							>
-								Replying to @{parent.author}
+								Replying to @{parent.authorName}
 							</button>
 						)}
 						<p>{text}</p>

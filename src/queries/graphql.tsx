@@ -161,6 +161,20 @@ export type UserPage = {
 	before?: Maybe<Scalars['String']>;
 };
 
+export type CreateNewTweetMutationVariables = {
+	author: Scalars['ID'];
+	timestamp: Scalars['Time'];
+	text: Scalars['String'];
+};
+
+export type CreateNewTweetMutation = {
+	createTweet: Pick<Tweet, 'timestamp' | 'text'> & { id: Tweet['_id'] } & {
+		author: Pick<User, 'name'> & { id: User['_id'] };
+		likes?: Maybe<Array<{ id: User['_id'] }>>;
+		replies?: Maybe<Array<{ id: Tweet['_id'] }>>;
+	};
+};
+
 export type GetAllTweetsQueryVariables = {};
 
 export type GetAllTweetsQuery = {
@@ -189,4 +203,37 @@ export type GetAllUsersQuery = {
 			>
 		>;
 	};
+};
+
+export type GetTweetByIdQueryVariables = {
+	id: Scalars['ID'];
+};
+
+export type GetTweetByIdQuery = {
+	findTweetByID?: Maybe<
+		Pick<Tweet, 'timestamp' | 'text'> & { id: Tweet['_id'] } & {
+			author: Pick<User, 'name'> & { id: User['_id'] };
+			likes?: Maybe<Array<{ id: User['_id'] }>>;
+			replies?: Maybe<Array<{ id: Tweet['_id'] }>>;
+		}
+	>;
+};
+
+export type UpdateExistingTweetMutationVariables = {
+	id: Scalars['ID'];
+	author: Scalars['ID'];
+	timestamp: Scalars['Time'];
+	text: Scalars['String'];
+	likes?: Maybe<Array<Scalars['ID']>>;
+	replies?: Maybe<Array<Scalars['ID']>>;
+};
+
+export type UpdateExistingTweetMutation = {
+	updateTweet?: Maybe<
+		Pick<Tweet, 'timestamp' | 'text'> & { id: Tweet['_id'] } & {
+			author: Pick<User, 'name'> & { id: User['_id'] };
+			likes?: Maybe<Array<{ id: User['_id'] }>>;
+			replies?: Maybe<Array<{ id: Tweet['_id'] }>>;
+		}
+	>;
 };
