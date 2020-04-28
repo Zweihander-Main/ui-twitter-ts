@@ -8,7 +8,6 @@
 	"dependencies": {
 		"apollo-boost": "^0.4.7",
 		"concurrently": "^5.1.0",
-		"cross-fetch": "^3.0.4",
 		"faunadb": "^2.13.1",
 		"graphql": "^15.0.0",
 		"graphql-tag": "^2.10.3",
@@ -23,14 +22,15 @@
 		"react-scripts": "3.4.1",
 		"redux": "^4.0.5",
 		"redux-devtools-extension": "^2.13.8",
-		"redux-thunk": "^2.3.0"
+		"redux-thunk": "^2.3.0",
+		"source-map-support": "^0.5.19"
 	},
 	"devDependencies": {
 		"@babel/preset-typescript": "^7.9.0",
 		"@graphql-codegen/cli": "^1.13.2",
 		"@graphql-codegen/introspection": "1.13.2",
 		"@graphql-codegen/typescript": "1.13.2",
-		"@graphql-codegen/typescript-graphql-files-modules": "^1.13.3",
+		"@graphql-codegen/typescript-document-nodes": "^1.13.3",
 		"@graphql-codegen/typescript-operations": "1.13.2",
 		"@testing-library/jest-dom": "^5.5.0",
 		"@testing-library/react": "^10.0.2",
@@ -62,7 +62,7 @@
 		"build": "npm run mergeSchema && npm run codegen && react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject",
-		"functionsBuild": "netlify-lambda build functions",
+		"functionsBuild": "netlify-lambda build functions -c ./functions/shared/webpack.config.js",
 		"codegen": "netlify dev:exec graphql-codegen --config codegen.yml",
 		"codegenWatch": "netlify dev:exec graphql-codegen --watch \"./src/queries/*.graphql\" --config codegen.yml",
 		"mergeSchema": "netlify dev:exec node ./scripts/faunadb-import.js",
@@ -80,7 +80,8 @@
 			"@babel/plugin-proposal-class-properties",
 			"@babel/plugin-transform-object-assign",
 			"@babel/plugin-proposal-object-rest-spread"
-		]
+		],
+		"sourceMaps": true
 	},
 	"eslintConfig": {
 		"env": {

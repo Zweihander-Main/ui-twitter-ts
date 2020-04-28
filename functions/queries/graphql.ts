@@ -1,3 +1,4 @@
+import gql from 'graphql-tag';
 export type Maybe<T> = T | null;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -237,3 +238,122 @@ export type UpdateExistingTweetMutation = {
 		}
 	>;
 };
+
+export const CreateNewTweet = gql`
+	mutation createNewTweet($author: ID!, $timestamp: Time!, $text: String!) {
+		createTweet(
+			data: {
+				author: { connect: $author }
+				timestamp: $timestamp
+				text: $text
+				likes: []
+				replies: []
+			}
+		) {
+			author {
+				id: _id
+				name
+			}
+			timestamp
+			id: _id
+			text
+			likes {
+				id: _id
+			}
+			replies {
+				id: _id
+			}
+		}
+	}
+`;
+export const GetAllTweets = gql`
+	query getAllTweets {
+		allTweets {
+			data {
+				author {
+					id: _id
+					name
+				}
+				timestamp
+				id: _id
+				text
+				likes {
+					id: _id
+				}
+				replies {
+					id: _id
+				}
+			}
+		}
+	}
+`;
+export const GetAllUsers = gql`
+	query getAllUsers {
+		allUsers {
+			data {
+				name
+				avatarURL
+				id: _id
+				tweets {
+					data {
+						id: _id
+					}
+				}
+			}
+		}
+	}
+`;
+export const GetTweetById = gql`
+	query getTweetByID($id: ID!) {
+		findTweetByID(id: $id) {
+			author {
+				id: _id
+				name
+			}
+			timestamp
+			id: _id
+			text
+			likes {
+				id: _id
+			}
+			replies {
+				id: _id
+			}
+		}
+	}
+`;
+export const UpdateExistingTweet = gql`
+	mutation updateExistingTweet(
+		$id: ID!
+		$author: ID!
+		$timestamp: Time!
+		$text: String!
+		$likes: [ID!]
+		$replies: [ID!]
+	) {
+		updateTweet(
+			id: $id
+			data: {
+				author: { connect: $author }
+				timestamp: $timestamp
+				text: $text
+				likes: $likes
+				replies: $replies
+			}
+		) {
+			author {
+				id: _id
+				name
+			}
+			timestamp
+			id: _id
+			text
+			likes {
+				id: _id
+			}
+			replies {
+				id: _id
+			}
+		}
+	}
+`;

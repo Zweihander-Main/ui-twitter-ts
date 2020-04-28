@@ -36,6 +36,10 @@
     -   Timestamp?
     -   Fix index -- use actual index and replace id generation system when applicable
 
+### Dev notes
+
+-   Using `@graphql-codegen/typescript-document-nodes` plugin for GraphQL Code Generator to allow easy importation of GraphQL AST code when bundling functions using `netlify-lambda`.
+
 ## Available for Hire
 
 I'm available for freelance, contracts, and consulting both remotely and in the Hudson Valley, NY (USA) area. [Some more about me](https://www.zweisolutions.com/about.html) and [what I can do for you](https://www.zweisolutions.com/services.html).
