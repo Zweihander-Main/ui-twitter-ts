@@ -59,7 +59,7 @@
 		"dev": "netlify dev",
 		"start": "npm run mergeSchema && npm run startWithoutMerge",
 		"startWithoutMerge": "concurrently \"npm:codegenWatch\" \"react-scripts start\"",
-		"build": "npm run mergeSchema && npm run codegen && react-scripts build",
+		"build": "npm run mergeSchema && npm run codegen && react-scripts build && npm run functionsBuild",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject",
 		"functionsBuild": "netlify-lambda build functions -c ./functions/shared/webpack.config.js",
