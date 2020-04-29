@@ -71,6 +71,7 @@ export function _getTweetInfo(
 		})
 		.then((result) => result.data)
 		.then((singleTweetResult) => {
+			console.log(singleTweetResult);
 			if (!singleTweetResult?.findTweetByID) {
 				throw new Error('Could not get tweet data from Fauna');
 			}

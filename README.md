@@ -32,9 +32,8 @@
 
 ### Current TODOs:
 
--   FaunaDB?
-    -   Timestamp?
-    -   Fix index -- use actual index and replace id generation system when applicable
+-   Combine initial data fetch calls into one call
+-   Implement authentication when Fauna implements GraphQL native bindings for it (can accomplish using resolvers in the meantime but out of the scope of this project)
 
 ### Dev notes
 

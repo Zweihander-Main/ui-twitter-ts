@@ -220,6 +220,20 @@ export type GetTweetByIdQuery = {
 	>;
 };
 
+export type RemoveTweetByIdMutationVariables = {
+	id: Scalars['ID'];
+};
+
+export type RemoveTweetByIdMutation = {
+	deleteTweet?: Maybe<
+		Pick<Tweet, 'timestamp' | 'text'> & { id: Tweet['_id'] } & {
+			author: Pick<User, 'name'> & { id: User['_id'] };
+			likes?: Maybe<Array<{ id: User['_id'] }>>;
+			replies?: Maybe<Array<{ id: Tweet['_id'] }>>;
+		}
+	>;
+};
+
 export type UpdateExistingTweetMutationVariables = {
 	id: Scalars['ID'];
 	author: Scalars['ID'];
@@ -306,6 +320,25 @@ export const GetAllUsers = gql`
 export const GetTweetById = gql`
 	query getTweetByID($id: ID!) {
 		findTweetByID(id: $id) {
+			author {
+				id: _id
+				name
+			}
+			timestamp
+			id: _id
+			text
+			likes {
+				id: _id
+			}
+			replies {
+				id: _id
+			}
+		}
+	}
+`;
+export const RemoveTweetById = gql`
+	mutation removeTweetByID($id: ID!) {
+		deleteTweet(id: $id) {
 			author {
 				id: _id
 				name

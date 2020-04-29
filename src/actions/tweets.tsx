@@ -10,11 +10,13 @@ import {
 	ADD_TWEET,
 	AddTweet,
 	Tweet,
+	DELETE_TWEET,
+	DeleteTweet,
 } from '../types';
 import { Dispatch, ActionCreator } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { showLoading, hideLoading } from 'react-redux-loading';
-import { saveLikeToggle, saveTweet } from '../utils/api';
+import { saveLikeToggle, saveTweet, saveDeleteTweet } from '../utils/api';
 
 export const getTweets = (tweets: Tweets): GetTweets => ({
 	type: GET_TWEETS,
@@ -67,6 +69,41 @@ export const handleAddTweet: ActionCreator<ThunkAction<
 					dispatch(addTweet(tweet));
 				})
 				.then(() => dispatch(hideLoading() as RootAction));
+		}
+	};
+};
+
+const deleteTweet = (id: string, author: string): DeleteTweet => ({
+	type: DELETE_TWEET,
+	payload: {
+		id,
+		author,
+	},
+});
+
+export const handleDeleteTweet: ActionCreator<ThunkAction<
+	Promise<void> | void,
+	RootState,
+	null,
+	RootAction
+>> = (id: string, authorID: string) => {
+	return (
+		dispatch: Dispatch<RootAction>,
+		getState: () => RootState
+	): Promise<void> | void => {
+		const { authedUser, tweets } = getState();
+		const tweet = tweets[id];
+		const { replyingTo } = tweet;
+		const replyTweet = replyingTo ? tweets[replyingTo] : null;
+		if (authedUser && authedUser === authorID) {
+			dispatch(deleteTweet(id, authorID));
+			return saveDeleteTweet({ id, replyingTo: replyTweet }).catch(
+				(e) => {
+					console.warn('Error in handleDeleteTweet: ', e);
+					dispatch(addTweet(tweet));
+					alert('The was an error deleting the tweet. Try again.');
+				}
+			);
 		}
 	};
 };

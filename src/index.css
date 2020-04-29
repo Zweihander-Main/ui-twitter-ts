@@ -102,7 +102,8 @@ li {
 	cursor: pointer;
 }
 
-.heart-button {
+.heart-button,
+.delete-button {
 	background: transparent;
 	border: none;
 }

@@ -5,6 +5,7 @@ import {
 	Tweets,
 	TOGGLE_TWEET,
 	ADD_TWEET,
+	DELETE_TWEET,
 } from '../types';
 
 const tweets: Reducer<Tweets, TweetActionTypes> = (
@@ -48,6 +49,22 @@ const tweets: Reducer<Tweets, TweetActionTypes> = (
 				[action.payload.id]: action.payload,
 				...replyingTo,
 			};
+		}
+		case DELETE_TWEET: {
+			const newState = { ...state };
+			const deletedTweet = newState[action.payload.id];
+			const { replyingTo } = deletedTweet;
+			if (replyingTo) {
+				const repliedTweet = newState[replyingTo];
+				newState[replyingTo].replies = repliedTweet.replies.filter(
+					(reply) => reply !== action.payload.id
+				);
+				if (!Array.isArray(newState[replyingTo].replies)) {
+					newState[replyingTo].replies = [];
+				}
+			}
+			delete newState[action.payload.id];
+			return newState;
 		}
 		default:
 			return state;

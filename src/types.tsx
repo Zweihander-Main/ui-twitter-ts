@@ -42,6 +42,7 @@ export interface UITweet {
 	replies: number;
 	hasLiked: boolean;
 	parent: null | UIParentTweet;
+	authorID: string;
 }
 
 export type UITweets = Array<UITweet>;
@@ -60,6 +61,11 @@ export interface TweetToSave {
 	replyingTo: null | string;
 }
 
+export interface TweetToDelete {
+	id: string;
+	replyingTo: Tweet | null;
+}
+
 export interface RootState {
 	users: Users;
 	tweets: Tweets;
@@ -72,6 +78,7 @@ export const GET_TWEETS = 'GET_TWEETS';
 export const TOGGLE_TWEET = 'TOGGLE_TWEET';
 export const ADD_TWEET = 'ADD_TWEET';
 export const GET_USERS = 'GET_USERS';
+export const DELETE_TWEET = 'DELETE_TWEET';
 
 export interface SetAuthedUser extends Action<typeof SET_AUTHED_USER> {
 	type: typeof SET_AUTHED_USER;
@@ -104,6 +111,14 @@ export interface AddTweet extends Action<typeof ADD_TWEET> {
 	payload: Tweet;
 }
 
+export interface DeleteTweet extends Action<typeof DELETE_TWEET> {
+	type: typeof DELETE_TWEET;
+	payload: {
+		id: string;
+		author: string;
+	};
+}
+
 // Add Action types from react-redux-loading
 const SHOW = 'loading-bar/SHOW';
 const HIDE = 'loading-bar/HIDE';
@@ -123,7 +138,7 @@ export interface HideLoadingAction extends Action<typeof HIDE> {
 }
 
 export type AuthedUserActionTypes = SetAuthedUser;
-export type TweetActionTypes = GetTweets | ToggleTweet | AddTweet;
+export type TweetActionTypes = GetTweets | ToggleTweet | AddTweet | DeleteTweet;
 export type UserActionTypes = GetUsers;
 export type ExternalActionTypes = ShowLoadingAction | HideLoadingAction;
 

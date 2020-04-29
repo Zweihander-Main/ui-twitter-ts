@@ -8,12 +8,13 @@ import {
 } from '../types';
 import { connect, ConnectedProps } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
-import { handleToggleTweet } from '../actions/tweets';
+import { handleToggleTweet, handleDeleteTweet } from '../actions/tweets';
 import { formatTweet, formatDate } from '../utils/helpers';
 import {
 	TiArrowBackOutline,
 	TiHeartOutline,
 	TiHeartFullOutline,
+	TiDeleteOutline,
 } from 'react-icons/ti';
 import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
 
@@ -26,6 +27,15 @@ class Tweet extends Component<
 		if (tweet) {
 			const { id, hasLiked } = tweet;
 			handleToggleTweetDispatch({ id, hasLiked, authedUser });
+		}
+	};
+
+	handleDelete = (e: React.MouseEvent<HTMLButtonElement>): void => {
+		e.preventDefault();
+		const { tweet, handleDeleteTweetDispatch } = this.props;
+		if (tweet) {
+			const { id, authorID } = tweet;
+			handleDeleteTweetDispatch(id, authorID);
 		}
 	};
 
@@ -49,6 +59,7 @@ class Tweet extends Component<
 			replies,
 			hasLiked,
 			parent,
+			authorID,
 		} = tweet;
 		return (
 			<Link to={`/tweet/${id}`} className="tweet">
@@ -91,6 +102,14 @@ class Tweet extends Component<
 							)}
 						</button>
 						<span>{likes !== 0 && likes}</span>
+						{authedUser === authorID ? (
+							<button
+								className="delete-button"
+								onClick={this.handleDelete}
+							>
+								<TiDeleteOutline className="tweet-icon" />
+							</button>
+						) : null}
 					</div>
 				</div>
 			</Link>
@@ -134,10 +153,20 @@ const mapState = (
 
 const mapDispatchToProps = (
 	dispatch: ThunkDispatch<RootState, null, RootAction>
-): { handleToggleTweetDispatch: (info: LikeToggleToSave) => Promise<void> } => {
+): {
+	handleToggleTweetDispatch: (info: LikeToggleToSave) => Promise<void>;
+	handleDeleteTweetDispatch: (
+		id: string,
+		authorID: string
+	) => Promise<void> | void;
+} => {
 	return {
 		handleToggleTweetDispatch: (info: LikeToggleToSave): Promise<void> =>
 			dispatch(handleToggleTweet(info)),
+		handleDeleteTweetDispatch: (
+			id: string,
+			authorID: string
+		): Promise<void> | void => dispatch(handleDeleteTweet(id, authorID)),
 	};
 };
 

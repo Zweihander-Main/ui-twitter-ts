@@ -24,6 +24,7 @@ export function formatTweet(
 		likes: likes.length,
 		replies: replies.length,
 		hasLiked: authedUser ? likes.includes(authedUser) : false,
+		authorID: author.id,
 		parent: !parentTweet
 			? null
 			: {

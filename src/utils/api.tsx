@@ -1,4 +1,11 @@
-import { Users, Tweets, LikeToggleToSave, TweetToSave, Tweet } from '../types';
+import {
+	Users,
+	Tweets,
+	LikeToggleToSave,
+	TweetToSave,
+	Tweet,
+	TweetToDelete,
+} from '../types';
 
 const baseURL = '/.netlify/functions/';
 
@@ -32,6 +39,15 @@ function _saveTweet(info: TweetToSave): Promise<Tweet> {
 	});
 }
 
+function _saveDeleteTweet(info: TweetToDelete): Promise<void> {
+	return fetch(`${baseURL}removeTweet`, {
+		method: 'POST',
+		body: JSON.stringify(info),
+	}).then(() => {
+		return Promise.resolve();
+	});
+}
+
 export function getInitialData(): Promise<{
 	users: Users;
 	tweets: Tweets;
@@ -48,4 +64,8 @@ export function saveLikeToggle(info: LikeToggleToSave): Promise<void> {
 
 export function saveTweet(info: TweetToSave): Promise<Tweet> {
 	return _saveTweet(info);
+}
+
+export function saveDeleteTweet(info: TweetToDelete): Promise<void> {
+	return _saveDeleteTweet(info);
 }
