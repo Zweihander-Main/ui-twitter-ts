@@ -1,0 +1,10 @@
+fragment returnUserFragment on User {
+	name
+	avatarURL
+	id: _id
+	tweets {
+		data {
+			id: _id
+		}
+	}
+}

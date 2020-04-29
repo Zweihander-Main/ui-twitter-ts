@@ -169,41 +169,19 @@ export type CreateNewTweetMutationVariables = {
 };
 
 export type CreateNewTweetMutation = {
-	createTweet: Pick<Tweet, 'timestamp' | 'text'> & { id: Tweet['_id'] } & {
-		author: Pick<User, 'name'> & { id: User['_id'] };
-		likes?: Maybe<Array<{ id: User['_id'] }>>;
-		replies?: Maybe<Array<{ id: Tweet['_id'] }>>;
-	};
+	createTweet: ReturnTweetFragmentFragment;
 };
 
 export type GetAllTweetsQueryVariables = {};
 
 export type GetAllTweetsQuery = {
-	allTweets: {
-		data: Array<
-			Maybe<
-				Pick<Tweet, 'timestamp' | 'text'> & { id: Tweet['_id'] } & {
-					author: Pick<User, 'name'> & { id: User['_id'] };
-					likes?: Maybe<Array<{ id: User['_id'] }>>;
-					replies?: Maybe<Array<{ id: Tweet['_id'] }>>;
-				}
-			>
-		>;
-	};
+	allTweets: { data: Array<Maybe<ReturnTweetFragmentFragment>> };
 };
 
 export type GetAllUsersQueryVariables = {};
 
 export type GetAllUsersQuery = {
-	allUsers: {
-		data: Array<
-			Maybe<
-				Pick<User, 'name' | 'avatarURL'> & { id: User['_id'] } & {
-					tweets: { data: Array<Maybe<{ id: Tweet['_id'] }>> };
-				}
-			>
-		>;
-	};
+	allUsers: { data: Array<Maybe<ReturnUserFragmentFragment>> };
 };
 
 export type GetTweetByIdQueryVariables = {
@@ -211,13 +189,7 @@ export type GetTweetByIdQueryVariables = {
 };
 
 export type GetTweetByIdQuery = {
-	findTweetByID?: Maybe<
-		Pick<Tweet, 'timestamp' | 'text'> & { id: Tweet['_id'] } & {
-			author: Pick<User, 'name'> & { id: User['_id'] };
-			likes?: Maybe<Array<{ id: User['_id'] }>>;
-			replies?: Maybe<Array<{ id: Tweet['_id'] }>>;
-		}
-	>;
+	findTweetByID?: Maybe<ReturnTweetFragmentFragment>;
 };
 
 export type RemoveTweetByIdMutationVariables = {
@@ -225,14 +197,20 @@ export type RemoveTweetByIdMutationVariables = {
 };
 
 export type RemoveTweetByIdMutation = {
-	deleteTweet?: Maybe<
-		Pick<Tweet, 'timestamp' | 'text'> & { id: Tweet['_id'] } & {
-			author: Pick<User, 'name'> & { id: User['_id'] };
-			likes?: Maybe<Array<{ id: User['_id'] }>>;
-			replies?: Maybe<Array<{ id: Tweet['_id'] }>>;
-		}
-	>;
+	deleteTweet?: Maybe<ReturnTweetFragmentFragment>;
 };
+
+export type ReturnTweetFragmentFragment = Pick<Tweet, 'timestamp' | 'text'> & {
+	id: Tweet['_id'];
+} & {
+	author: Pick<User, 'name'> & { id: User['_id'] };
+	likes?: Maybe<Array<{ id: User['_id'] }>>;
+	replies?: Maybe<Array<{ id: Tweet['_id'] }>>;
+};
+
+export type ReturnUserFragmentFragment = Pick<User, 'name' | 'avatarURL'> & {
+	id: User['_id'];
+} & { tweets: { data: Array<Maybe<{ id: Tweet['_id'] }>> } };
 
 export type UpdateExistingTweetMutationVariables = {
 	id: Scalars['ID'];
@@ -244,15 +222,38 @@ export type UpdateExistingTweetMutationVariables = {
 };
 
 export type UpdateExistingTweetMutation = {
-	updateTweet?: Maybe<
-		Pick<Tweet, 'timestamp' | 'text'> & { id: Tweet['_id'] } & {
-			author: Pick<User, 'name'> & { id: User['_id'] };
-			likes?: Maybe<Array<{ id: User['_id'] }>>;
-			replies?: Maybe<Array<{ id: Tweet['_id'] }>>;
-		}
-	>;
+	updateTweet?: Maybe<ReturnTweetFragmentFragment>;
 };
 
+export const ReturnTweetFragment = gql`
+	fragment returnTweetFragment on Tweet {
+		author {
+			id: _id
+			name
+		}
+		timestamp
+		id: _id
+		text
+		likes {
+			id: _id
+		}
+		replies {
+			id: _id
+		}
+	}
+`;
+export const ReturnUserFragment = gql`
+	fragment returnUserFragment on User {
+		name
+		avatarURL
+		id: _id
+		tweets {
+			data {
+				id: _id
+			}
+		}
+	}
+`;
 export const CreateNewTweet = gql`
 	mutation createNewTweet($author: ID!, $timestamp: Time!, $text: String!) {
 		createTweet(
@@ -264,96 +265,46 @@ export const CreateNewTweet = gql`
 				replies: []
 			}
 		) {
-			author {
-				id: _id
-				name
-			}
-			timestamp
-			id: _id
-			text
-			likes {
-				id: _id
-			}
-			replies {
-				id: _id
-			}
+			...returnTweetFragment
 		}
 	}
+	${ReturnTweetFragment}
 `;
 export const GetAllTweets = gql`
 	query getAllTweets {
 		allTweets {
 			data {
-				author {
-					id: _id
-					name
-				}
-				timestamp
-				id: _id
-				text
-				likes {
-					id: _id
-				}
-				replies {
-					id: _id
-				}
+				...returnTweetFragment
 			}
 		}
 	}
+	${ReturnTweetFragment}
 `;
 export const GetAllUsers = gql`
 	query getAllUsers {
 		allUsers {
 			data {
-				name
-				avatarURL
-				id: _id
-				tweets {
-					data {
-						id: _id
-					}
-				}
+				...returnUserFragment
 			}
 		}
 	}
+	${ReturnUserFragment}
 `;
 export const GetTweetById = gql`
 	query getTweetByID($id: ID!) {
 		findTweetByID(id: $id) {
-			author {
-				id: _id
-				name
-			}
-			timestamp
-			id: _id
-			text
-			likes {
-				id: _id
-			}
-			replies {
-				id: _id
-			}
+			...returnTweetFragment
 		}
 	}
+	${ReturnTweetFragment}
 `;
 export const RemoveTweetById = gql`
 	mutation removeTweetByID($id: ID!) {
 		deleteTweet(id: $id) {
-			author {
-				id: _id
-				name
-			}
-			timestamp
-			id: _id
-			text
-			likes {
-				id: _id
-			}
-			replies {
-				id: _id
-			}
+			...returnTweetFragment
 		}
 	}
+	${ReturnTweetFragment}
 `;
 export const UpdateExistingTweet = gql`
 	mutation updateExistingTweet(
@@ -374,19 +325,8 @@ export const UpdateExistingTweet = gql`
 				replies: $replies
 			}
 		) {
-			author {
-				id: _id
-				name
-			}
-			timestamp
-			id: _id
-			text
-			likes {
-				id: _id
-			}
-			replies {
-				id: _id
-			}
+			...returnTweetFragment
 		}
 	}
+	${ReturnTweetFragment}
 `;

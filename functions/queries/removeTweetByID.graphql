@@ -1,17 +1,6 @@
+#import "./returnTweetFragment.graphql"
 mutation removeTweetByID($id: ID!) {
 	deleteTweet(id: $id) {
-		author {
-			id: _id
-			name
-		}
-		timestamp
-		id: _id
-		text
-		likes {
-			id: _id
-		}
-		replies {
-			id: _id
-		}
+		...returnTweetFragment
 	}
 }

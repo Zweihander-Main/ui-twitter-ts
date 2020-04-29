@@ -1,0 +1,15 @@
+fragment returnTweetFragment on Tweet {
+	author {
+		id: _id
+		name
+	}
+	timestamp
+	id: _id
+	text
+	likes {
+		id: _id
+	}
+	replies {
+		id: _id
+	}
+}

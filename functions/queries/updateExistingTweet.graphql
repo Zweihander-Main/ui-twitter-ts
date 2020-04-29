@@ -1,3 +1,4 @@
+#import "./returnTweetFragment.graphql"
 mutation updateExistingTweet(
 	$id: ID!
 	$author: ID!
@@ -16,18 +17,6 @@ mutation updateExistingTweet(
 			replies: $replies
 		}
 	) {
-		author {
-			id: _id
-			name
-		}
-		timestamp
-		id: _id
-		text
-		likes {
-			id: _id
-		}
-		replies {
-			id: _id
-		}
+		...returnTweetFragment
 	}
 }
