@@ -3,6 +3,10 @@ import { ReturnData, returnPreflight, client } from './shared';
 import { GetAllUsersQuery, GetAllUsers } from './queries/graphql';
 import { Users } from '../src/types';
 
+/**
+ * Reads users from Fauna and returns a Users object.
+ */
+
 const lambda: AWSLambda.Handler<AWSLambda.APIGatewayProxyEvent, ReturnData> = (
 	event: AWSLambda.APIGatewayProxyEvent
 ) => {

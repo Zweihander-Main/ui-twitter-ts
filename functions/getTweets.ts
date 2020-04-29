@@ -8,6 +8,10 @@ import {
 import { GetAllTweetsQuery, GetAllTweets } from './queries/graphql';
 import { Tweets } from '../src/types';
 
+/**
+ * Reads tweets from Fauna and returns a Tweets object.
+ */
+
 const lambda: AWSLambda.Handler<AWSLambda.APIGatewayProxyEvent, ReturnData> = (
 	event: AWSLambda.APIGatewayProxyEvent
 ) => {

@@ -8,6 +8,10 @@ import {
 } from '../queries/graphql';
 import { Tweet } from '../../src/types';
 
+/**
+ * Common code shared between different lambda functions.
+ */
+
 const URL = 'https://graphql.fauna.com/graphql';
 const Authorization = `Bearer ${process.env.FAUNADB_SERVER_SECRET}`;
 const standardHeaders = {

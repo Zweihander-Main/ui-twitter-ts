@@ -10,6 +10,10 @@ import {
 } from './queries/graphql';
 import { TweetToDelete } from '../src/types';
 
+/**
+ * Removes tweet from Fauna and updates any Tweets it may have been replying to.
+ */
+
 const lambda: AWSLambda.Handler<AWSLambda.APIGatewayProxyEvent, ReturnData> = (
 	event: AWSLambda.APIGatewayProxyEvent
 ) => {

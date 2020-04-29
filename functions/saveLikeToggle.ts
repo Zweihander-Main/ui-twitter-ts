@@ -7,6 +7,10 @@ import {
 } from './queries/graphql';
 import { LikeToggleToSave } from '../src/types';
 
+/**
+ * Get info for tweet to like, then toggles like status for authedUser.
+ */
+
 const lambda: AWSLambda.Handler<AWSLambda.APIGatewayProxyEvent, ReturnData> = (
 	event: AWSLambda.APIGatewayProxyEvent
 ) => {

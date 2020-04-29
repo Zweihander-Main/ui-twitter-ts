@@ -1,4 +1,10 @@
 /* eslint-disable no-console, @typescript-eslint/no-var-requires, @typescript-eslint/explicit-function-return-type */
+
+/**
+ * FaunaDB loader for GraphQL Code Generator. Pulls the Schema from Fauna,
+ * builds it, and sends it back to codegen.
+ */
+
 const {
 	getIntrospectionQuery,
 	buildClientSchema,

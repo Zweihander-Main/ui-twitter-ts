@@ -1,4 +1,11 @@
 /* eslint-disable no-console, @typescript-eslint/no-var-requires, @typescript-eslint/explicit-function-return-type*/
+
+/**
+ * Imports the local schema (masterSchema.gql) into FaunaDB for easy
+ * bootstrapping. Keep in mind that Fauna autogenerates a lot of queries and
+ * mutations on their end.
+ */
+
 (() => {
 	const fetch = require('node-fetch');
 	const fs = require('fs');

@@ -2,7 +2,7 @@
 
 /**
  * Script to bootstrap data into FaunaDB using GQL.
- * Already assumes schema is uploaded.
+ * Already assumes schema is uploaded using faunadb-import script.
  */
 
 const users = {

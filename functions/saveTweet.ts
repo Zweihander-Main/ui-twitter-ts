@@ -16,6 +16,10 @@ import {
 } from './queries/graphql';
 import { TweetToSave } from '../src/types';
 
+/**
+ * Saves new tweet and updates any new tweets it was replying to.
+ */
+
 const lambda: AWSLambda.Handler<AWSLambda.APIGatewayProxyEvent, ReturnData> = (
 	event: AWSLambda.APIGatewayProxyEvent
 ) => {

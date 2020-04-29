@@ -7,6 +7,10 @@ import {
 	TweetToDelete,
 } from '../types';
 
+/**
+ * API makes calls to Netlify functions (located in the functions folder).
+ */
+
 const baseURL = '/.netlify/functions/';
 
 const _getUsers = (): Promise<Users> => {
