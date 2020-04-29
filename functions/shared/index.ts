@@ -14,14 +14,18 @@ import { Tweet } from '../../src/types';
 
 const URL = 'https://graphql.fauna.com/graphql';
 const Authorization = `Bearer ${process.env.FAUNADB_SERVER_SECRET}`;
+export const returnHeaders = {
+	'cache-control': 'no-cache no-store max-age=0 must-revalidate',
+};
 const standardHeaders = {
 	'Access-Control-Allow-Methods': 'GET, POST',
+	...returnHeaders,
 };
 
 export interface ReturnData {
 	statusCode: number;
 	body: string;
-	headers?: typeof standardHeaders;
+	headers?: typeof standardHeaders | typeof returnHeaders;
 }
 
 export function returnPreflight(): Promise<ReturnData> {
@@ -75,7 +79,6 @@ export function _getTweetInfo(
 		})
 		.then((result) => result.data)
 		.then((singleTweetResult) => {
-			console.log(singleTweetResult);
 			if (!singleTweetResult?.findTweetByID) {
 				throw new Error('Could not get tweet data from Fauna');
 			}

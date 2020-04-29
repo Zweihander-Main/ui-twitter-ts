@@ -1,5 +1,5 @@
 /*eslint-disable no-console*/
-import { ReturnData, returnPreflight, client } from './shared';
+import { ReturnData, returnPreflight, client, returnHeaders } from './shared';
 import { GetAllUsersQuery, GetAllUsers } from './queries/graphql';
 import { Users } from '../src/types';
 
@@ -44,6 +44,7 @@ const lambda: AWSLambda.Handler<AWSLambda.APIGatewayProxyEvent, ReturnData> = (
 				return {
 					statusCode: 200,
 					body: JSON.stringify(data),
+					headers: returnHeaders,
 				};
 			})
 			.catch((error) => {
@@ -51,6 +52,7 @@ const lambda: AWSLambda.Handler<AWSLambda.APIGatewayProxyEvent, ReturnData> = (
 				return {
 					statusCode: 400,
 					body: JSON.stringify(error),
+					headers: returnHeaders,
 				};
 			});
 	}

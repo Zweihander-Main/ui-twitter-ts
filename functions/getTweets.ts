@@ -4,6 +4,7 @@ import {
 	returnPreflight,
 	client,
 	_singleTweetMapper,
+	returnHeaders,
 } from './shared';
 import { GetAllTweetsQuery, GetAllTweets } from './queries/graphql';
 import { Tweets } from '../src/types';
@@ -57,6 +58,7 @@ const lambda: AWSLambda.Handler<AWSLambda.APIGatewayProxyEvent, ReturnData> = (
 				return {
 					statusCode: 200,
 					body: JSON.stringify(data),
+					headers: returnHeaders,
 				};
 			})
 			.catch((error) => {
@@ -64,6 +66,7 @@ const lambda: AWSLambda.Handler<AWSLambda.APIGatewayProxyEvent, ReturnData> = (
 				return {
 					statusCode: 400,
 					body: JSON.stringify(error),
+					headers: returnHeaders,
 				};
 			});
 	}

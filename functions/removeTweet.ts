@@ -1,5 +1,5 @@
 /*eslint-disable no-console*/
-import { ReturnData, returnPreflight, client } from './shared';
+import { ReturnData, returnPreflight, client, returnHeaders } from './shared';
 import {
 	RemoveTweetById,
 	RemoveTweetByIdMutation,
@@ -44,6 +44,7 @@ const lambda: AWSLambda.Handler<AWSLambda.APIGatewayProxyEvent, ReturnData> = (
 					return {
 						statusCode: 200,
 						body: '',
+						headers: returnHeaders,
 					};
 				}
 				const replies = replyingTo.replies.filter(
@@ -78,6 +79,7 @@ const lambda: AWSLambda.Handler<AWSLambda.APIGatewayProxyEvent, ReturnData> = (
 						return {
 							statusCode: 200,
 							body: '',
+							headers: returnHeaders,
 						};
 					});
 			})
@@ -86,6 +88,7 @@ const lambda: AWSLambda.Handler<AWSLambda.APIGatewayProxyEvent, ReturnData> = (
 				return {
 					statusCode: 400,
 					body: JSON.stringify(error),
+					headers: returnHeaders,
 				};
 			});
 	}

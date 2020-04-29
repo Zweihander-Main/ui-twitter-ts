@@ -1,5 +1,11 @@
 /*eslint-disable no-console*/
-import { ReturnData, returnPreflight, client, _getTweetInfo } from './shared';
+import {
+	ReturnData,
+	returnPreflight,
+	client,
+	_getTweetInfo,
+	returnHeaders,
+} from './shared';
 import {
 	UpdateExistingTweetMutationVariables,
 	UpdateExistingTweetMutation,
@@ -56,6 +62,7 @@ const lambda: AWSLambda.Handler<AWSLambda.APIGatewayProxyEvent, ReturnData> = (
 					return {
 						statusCode: 200,
 						body: '',
+						headers: returnHeaders,
 					};
 				})
 				.catch((error) => {
@@ -63,6 +70,7 @@ const lambda: AWSLambda.Handler<AWSLambda.APIGatewayProxyEvent, ReturnData> = (
 					return {
 						statusCode: 400,
 						body: JSON.stringify(error),
+						headers: returnHeaders,
 					};
 				});
 		});
