@@ -65,6 +65,7 @@
 -   Babel configuration and `functions/shared/webpack.config.js` files are used purely for functions and not for client facing code.
 -   No GraphQL caching is enabled since the Apollo calls are on the backend serverless functions.
 -   Users are identified by Fauna ID rather than by the original strings.
+-   Netlify functions sometimes provide cached results. This shouldn't affect the app until the user reloads as it maintains a client side state. Cache invalidation headers were set but each node in the Netlify CDN may take time to use them or use them with differing results.
 
 ## Available for Hire
 
